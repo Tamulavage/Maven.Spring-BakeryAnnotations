@@ -7,10 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
+import java.util.Objects;
+
 @Entity
 public class Baker {
     @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -63,5 +66,21 @@ public class Baker {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Baker baker = (Baker) o;
+        return Objects.equals(id, baker.id) &&
+                Objects.equals(name, baker.name) &&
+                Objects.equals(employeeId, baker.employeeId) &&
+                Objects.equals(specialty, baker.specialty);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, employeeId, specialty);
     }
 }

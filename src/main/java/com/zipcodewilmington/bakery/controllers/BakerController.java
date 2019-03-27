@@ -5,10 +5,7 @@ import com.zipcodewilmington.bakery.services.BakerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class BakerController {
@@ -23,23 +20,25 @@ public class BakerController {
         return new ResponseEntity<>(service.index(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/show.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/bakers/{id}", method = RequestMethod.GET)
     public ResponseEntity<Baker> show(@PathVariable Long id) {
         return new ResponseEntity<>(service.show(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<Baker> create(@RequestParam Baker baker) {
+   // @RequestMapping(value = "/bakers/",  method = RequestMethod.POST)
+    @PostMapping("/bakers/")
+    public ResponseEntity<Baker> create(@RequestBody Baker baker) {
         return new ResponseEntity<>(service.create(baker), HttpStatus.CREATED);
+       // return new ResponseEntity<>(service.create(baker), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity<Baker> update(@RequestParam Long id, @RequestParam Baker baker) {
+    @RequestMapping(value = "/bakers/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Baker> update(@PathVariable Long id, @RequestBody Baker baker) {
         return new ResponseEntity<>(service.update(id, baker), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/destroy", method = RequestMethod.DELETE)
-    public ResponseEntity<Boolean> destroy(@RequestParam Long id) {
+    @RequestMapping(value = "/bakers/", method = RequestMethod.DELETE)
+    public ResponseEntity<Boolean> destroy(@RequestBody Long id) {
         return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
     }
 }
